@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
+
 
 const UseMemo = () => {
   const [number, setNumber] = useState(0);
@@ -6,7 +7,7 @@ const UseMemo = () => {
 
 
   const memoCalculation= useMemo(()=>{
-    expensiveFunction(number)
+    return expensiveFunction(number)
   },[number]) // it will take two arguments 1.cb fnc 2.dependencies array
   // when any variable from this dependency is changed only then and then cb fnc
   // will run

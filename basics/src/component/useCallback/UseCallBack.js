@@ -10,6 +10,10 @@ const UseCallBack = () => {
     return [newVal * 1, newVal * 2, newVal * 3, newVal * 4, newVal * 5];
   }, [number]);
 
+  // function calculateTable() {
+  //   return [number * 1, number * 2, number * 3, number * 4, number * 5];
+  // }
+
   const cssStyle = {
     backgroundColor: dark ? "#333" : "#fff",
     color: dark ? "#fff" : "#333",

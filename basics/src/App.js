@@ -6,13 +6,17 @@ import React from "react";
 // import UseMemo from "./component/useMemo/UseMemo";
 // import NewTheme from "./component/NewTheme";
 // import UseCallBack from "./component/useCallback/UseCallBack";
-import Example from "./component/customHook/Example";
+// import Example from "./component/customHook/Example";
+// import UseEffect from "./component/demoEx/UseEffect";
+// import UseEffectCleanUp from "./component/demoEx/UseEffectCleanUp";
+// import UECleanUpEx2 from "./component/demoEx/UECleanUpEx2";
+import ExamaPle from "./component/demoEx/ExamaPle";
 
 
 const App = () => {
   return (
     <>
-      <Example/>
+      <ExamaPle/>
     </>
   );
 };

@@ -1,10 +1,9 @@
 import React from 'react'
 import useFetch from './useFetch'
 
-const Example = () => {
+const ExamaPle = () => {
 
   const data = useFetch('https://jsonplaceholder.typicode.com/users')
-
   return (
     <div>
       {data.map((val,index)=>(
@@ -14,4 +13,4 @@ const Example = () => {
   )
 }
 
-export default Example
+export default ExamaPle

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 // import LightDark from "./component/light_dark/LightDark";
 // import Counter from "./component/use_reducer/Counter";
 // import UseRef from "./component/useRef/UseRef";
@@ -11,12 +11,17 @@ import React from "react";
 // import UseEffectCleanUp from "./component/demoEx/UseEffectCleanUp";
 // import UECleanUpEx2 from "./component/demoEx/UECleanUpEx2";
 import ExamaPle from "./component/demoEx/ExamaPle";
-
+import ContextApi from "./contexApi/ContextApi";
+import Header from "./component/Header/Header";
 
 const App = () => {
+  const[query,setQuery] = useState('')
   return (
     <>
-      <ExamaPle/>
+      <ContextApi>
+        <Header setQuery={setQuery}/>
+        <ExamaPle query={query}/>
+      </ContextApi>
     </>
   );
 };

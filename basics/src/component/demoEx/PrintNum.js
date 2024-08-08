@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react'
 
-const PrintNum = ({calPrint}) => {
+const PrintNum = ({print}) => {
 
+const[data,setData] = useState([])
 
-  const[data,setaData] = useState([]);
-
-  useEffect(()=>{
-    console.log("print fnc runs");
-    setaData(calPrint())
-  },[calPrint])
+useEffect(()=>{
+  console.log('number printing')
+  setData(print)
+},[print])
   return (
-   <>
-   {data.map((val,index)=>(
-    <p key={index}>{val}</p>
-   ))}
-   </>
+    <div>
+      {data.map((val,index)=>(
+        <p key={index}>{val}</p>
+      ))}
+    </div>
   )
 }
 

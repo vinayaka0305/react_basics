@@ -1,0 +1,13 @@
+.container{
+    display: flex;
+    justify-content: space-between;
+    width: 1000px;
+    margin: 0 auto;
+    align-items: center;
+}
+.left-arrow img{
+    max-width: 40px;
+}
+.right-arrow img{
+    max-width: 40px;
+}

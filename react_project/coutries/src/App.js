@@ -1,13 +1,15 @@
-import React from "react";
-import Header from "./components/Header"
+import React, { useState } from "react";
+import Header from "./components/Header";
 import { Outlet } from "react-router-dom";
-
+import ThemeContext from "./context/ThemeContext";
 
 const App = () => {
   return (
     <>
-      <Header />
-      <Outlet/>
+      <ThemeContext>
+        <Header />
+        <Outlet />
+      </ThemeContext>
     </>
   );
 };

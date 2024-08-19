@@ -1,0 +1,37 @@
+// the process of react componet
+// from mounting to unmount(from current to next page the previous will unmount)
+// this process if called life cyle of component 
+//there are 3 main stages in life
+// 1.mounting 
+// 2.updating
+// 3.unmounting
+
+1. Mounting->
+
+* first constructor will run and the second render will run
+* render is common in updating also
+* after render runs react will update the DOM(what jsx we return that will show in page)
+* after DOM updation the component didMount method will run
+
+ componentDidMount ->
+ (constructor,render,componentDidMount)
+ -constructor method will call only one time
+ - this method is used to access the DOM and for api call;
+ - we can call api and accessing dom inside this method only;
+ - it will run only time after the component mounts
+ - this method is equivalent to useEffect hook function component with empty dependency
+
+
+ componentDidUpdate->
+
+  (render,componentUpdate)
+  - this method will run when ever the state and props are gets updated
+  - after the component will be rerender 
+  - this method is equivalent to useEffect hook function component with variable in dependency
+
+componentWillUnmount->
+
+- this method will update when we go from current page to another page
+-this method is equivalent to
+- useEffect hook function after we return
+

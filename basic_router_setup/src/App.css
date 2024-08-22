@@ -1,0 +1,22 @@
+.navbar{
+    padding: 10px 20px;
+    border-bottom: 1px solid #bcbcbc;
+}
+
+.navbar a{
+    color: #333;
+    text-decoration: none;
+    margin: 0 10px;
+    padding: 2px 8px;
+    background-color: transparent;
+    border-radius: 4px;
+    transition: all 0.3 ease;
+}
+
+.navbar a:hover{
+    background-color: #10101072;
+}
+.navbar a.active{
+    background-color: #101010;
+    color: #ffe400;
+}

@@ -79,4 +79,9 @@ const Header = () => {
   );
 };
 
+const h1_virtual = <h1>Hello world</h1>
+const h1_real = document.createElement('h1');
+h1_real.innerText= 'hello world'
+console.log(h1_virtual);
+console.dir(h1_real);
 export default Header;

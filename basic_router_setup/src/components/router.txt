@@ -1,0 +1,5 @@
+React router dom
+
+* we use react router dom for creating different routes in our app
+* basically we are defining on which path which component should be displayed
+

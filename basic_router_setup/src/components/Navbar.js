@@ -10,6 +10,8 @@ const Navbar = () => {
         <NavLink to="/stopwatch1">Stop Watch 1</NavLink>
         <NavLink to="/stopwatch2">Stop Watch 2</NavLink>
         <NavLink to="/stopwatch3">Stop Watch 3</NavLink>
+        <NavLink to="/todo">To do list</NavLink>
+        <NavLink to="/todo2">To do list 2</NavLink>
     </nav>
   )
 }

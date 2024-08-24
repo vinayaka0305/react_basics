@@ -16,7 +16,12 @@ const StopWatch1 = () => {
     return () => {
       clearInterval(interval);
     };
-  });
+  },[running]);
+
+  const resetTimer = ()=>{
+    setTime(0);
+    setRunning(false);
+  }
 
   return (
     <>
@@ -29,7 +34,7 @@ const StopWatch1 = () => {
       <div>
         <button onClick={() => setRunning(true)}>start</button>
         <button onClick={() => setRunning(false)}>stop</button>
-        <button onClick={() => setTime(0)}>reset</button>
+        <button onClick={resetTimer}>reset</button>
       </div>
     </>
   );

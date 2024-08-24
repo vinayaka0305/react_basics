@@ -20,3 +20,25 @@
     background-color: #101010;
     color: #ffe400;
 }
+
+.container{
+    height: 200px;
+    display: flex;
+    background-color: #ffe400;
+
+    .gun{
+        height: 50px;
+        width: 20px;
+        background-color: #333;
+    }
+    .bullet{
+        width: 40px;
+        height: 20px;
+        background-color: #ff1e00;
+    }
+    .count{
+        font-size: 40px;
+        font-weight: 600;
+    }
+
+}

@@ -9,6 +9,8 @@ import UsersDetails from "./components/Pages/UsersDetails";
 import StopWatch1 from "./components/Pages/StopWatch1";
 import StopWatch2 from "./components/Pages/StopWatch2";
 import Stopwatch3 from "./components/Pages/Stopwatch3";
+import TodoList from "./components/Pages/TodoList";
+import TodoList2 from "./components/Pages/TodoList2";
 
 function App() {
   return <Router>
@@ -22,6 +24,8 @@ function App() {
         <Route path="/stopwatch1" element={<StopWatch1/>}/>
         <Route path="/stopwatch2" element={<StopWatch2/>}/>
         <Route path="/stopwatch3" element={<Stopwatch3/>}/>
+        <Route path="/todo" element={<TodoList/>}/>
+        <Route path="/todo2" element={<TodoList2/>}/>
         <Route path="*" element={<NotFound/>}/>
       </Routes>
     </div>

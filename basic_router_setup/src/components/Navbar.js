@@ -12,6 +12,9 @@ const Navbar = () => {
         <NavLink to="/stopwatch3">Stop Watch 3</NavLink>
         <NavLink to="/todo">To do list</NavLink>
         <NavLink to="/todo2">To do list 2</NavLink>
+        <NavLink to="/preformance">Debounce & throttle</NavLink>
+        <NavLink to="/form">Form</NavLink>
+        <NavLink to="/formik">Form using formik</NavLink>
     </nav>
   )
 }

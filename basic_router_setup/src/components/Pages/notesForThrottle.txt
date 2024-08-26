@@ -1,0 +1,146 @@
+Let's break down the `ourThrottle` function line by line to understand how it works.
+
+### The `ourThrottle` Function
+
+```javascript
+const ourThrottle = (fn, delay) => {
+  let timer;
+  return (...args) => {
+    if (!timer) {
+      fn(...args);
+      timer = setTimeout(() => {
+        timer = null;
+      }, delay);
+    }
+  };
+};
+```
+
+### Line-by-Line Explanation
+
+1. **Line 1: Function Definition**
+
+   ```javascript
+   const ourThrottle = (fn, delay) => {
+   ```
+
+   - This line defines a function called `ourThrottle` using the arrow function syntax.
+   - `fn` is the function you want to control (throttle) how often it can be called.
+   - `delay` is the time in milliseconds that must pass before `fn` can be called again.
+
+2. **Line 2: Timer Variable Declaration**
+
+   ```javascript
+   let timer;
+   ```
+
+   - `let timer;` declares a variable named `timer` that will be used to keep track of the timeout.
+   - Initially, `timer` is `undefined` (or `null`, depending on the context), meaning no timeout is set.
+
+3. **Line 3: Returning a Function**
+
+   ```javascript
+   return (...args) => {
+   ```
+
+   - This line returns a new function that can be called later.
+   - The returned function uses the "rest" operator `(...args)`, which allows it to accept any number of arguments. These arguments are passed to `fn` when it's called.
+
+4. **Line 4: Check if Timer is Active**
+
+   ```javascript
+   if (!timer) {
+   ```
+
+   - `if (!timer)` checks if there is no active timer (i.e., `timer` is `null` or `undefined`).
+   - If `timer` is not set (no active timeout), this means it's okay to call `fn`.
+
+5. **Line 5: Call the Function `fn`**
+
+   ```javascript
+   fn(...args);
+   ```
+
+   - `fn(...args);` calls the function `fn` with all the arguments passed to the throttled function.
+   - This line is executed only if there is no active timer, meaning `fn` can only be called once every `delay` milliseconds.
+
+6. **Line 6-8: Set New Timeout and Reset Timer**
+
+   ```javascript
+   timer = setTimeout(() => {
+     timer = null;
+   }, delay);
+   ```
+
+   - `timer = setTimeout(() => { ... }, delay);` sets a new timeout. This timeout runs after the specified `delay` period.
+   - The timeout function sets `timer` back to `null` after the delay. This resets the `timer` variable so that `fn` can be called again after `delay` milliseconds have passed.
+
+### How `ourThrottle` Works
+
+Let's go through an example to see how the throttled function behaves:
+
+1. **First Call:**
+   - You call the throttled function.
+   - `timer` is initially `undefined`, so the `if (!timer)` condition is true.
+   - `fn` is executed immediately with the given arguments.
+   - `timer` is set to a new timeout that will last for the specified `delay`.
+
+2. **Subsequent Calls (Within the Delay Period):**
+   - If you call the throttled function again before the `delay` period ends, `timer` is not `null` (it’s still active).
+   - Because `timer` is set, the condition `if (!timer)` is false, and `fn` is not executed.
+
+3. **After the Delay Period:**
+   - Once the delay period ends, the timeout completes, and the anonymous function runs, setting `timer` back to `null`.
+   - Now, if you call the throttled function again, `fn` can be executed because `timer` is `null` again.
+
+
+### Summary
+
+- **`ourThrottle`** ensures that the function `fn` is only called once every `delay` milliseconds, no matter how many times the throttled function is called.
+- **`if (!timer)`** checks if the function `fn` can be executed. If there is no active timer, `fn` is called, and a timer is set up to prevent further calls within the delay period.
+- **`setTimeout(() => { timer = null; }, delay)`** resets the timer after the delay period, allowing `fn` to be called again in the future. 
+
+This mechanism is useful when you want to limit how often a function can be triggered, such as handling scroll events or resizing a window, where events can fire rapidly and you want to control the rate at which a function executes.
+
+
+The issue you're encountering and the subsequent improvement after using `useCallback` is tied to how React handles function components and state updates.
+
+### Understanding the Problem
+
+In React, every time a component re-renders, all the functions inside that component are recreated. This means that without `useCallback`, each render creates new instances of your `handleDebounce` and `handleThrottle` functions. This causes a few issues:
+
+1. **Unstable Debounce and Throttle Functions**: Debounce and throttle functions rely on having a stable reference to the same function instance over time, especially since they manage timers internally (`setTimeout`). If a new function is created on each render, the internal state of these timers is lost, leading to unexpected behavior.
+   
+2. **Unnecessary Re-Renders**: When you pass a function as a prop to a child component, React compares the function references to check if the prop has changed. If you are not using `useCallback`, React sees a new function reference on every render and might trigger unnecessary re-renders of child components or even of the same component when used in `onChange` handlers like in your example.
+
+### How `useCallback` Solves These Problems
+
+The `useCallback` hook in React is used to memoize a function — that is, to "remember" a function instance between renders if its dependencies have not changed.
+
+Here’s how `useCallback` improves the performance and correctness in your example:
+
+1. **Memoizing Function Instances**: `useCallback` ensures that `handleDebounce` and `handleThrottle` retain the same function instance between renders as long as their dependencies don’t change. This means the debounce and throttle logic can maintain their internal state correctly (like timers) across renders.
+
+2. **Avoiding Unnecessary Re-Creation of Functions**: By using `useCallback`, you prevent these functions from being recreated on every render. This makes sure that any component receiving these functions as props won’t mistakenly think that the props have changed, thereby avoiding unnecessary re-renders.
+
+### Detailed Example Walkthrough
+
+- **Without `useCallback`**:
+  ```jsx
+  const handleDebounce = ourDebounce(deBounceChange, 500);
+  const handleThrottle = ourThrottle(throttleChange, 1000);
+  ```
+
+  In this case, every time `PerformaceImprove` re-renders (which happens whenever you type in any of the input fields due to state updates), new versions of `handleDebounce` and `handleThrottle` are created. This means the previous debounce or throttle timers are reset and new ones are started, leading to incorrect behavior.
+
+- **With `useCallback`**:
+  ```jsx
+  const handleDebounce = useCallback(ourDebounce(deBounceChange, 500), []);
+  const handleThrottle = useCallback(ourThrottle(throttleChange, 1000), []);
+  ```
+
+  Here, `useCallback` ensures that `handleDebounce` and `handleThrottle` functions are created only once and reused in every render unless their dependencies change (which in your example are empty arrays, so they never change). This stable reference ensures that the debounce and throttle mechanisms work correctly, as they can keep their internal timers intact across renders.
+
+### Conclusion
+
+By using `useCallback`, you make sure your debounce and throttle functions are stable across renders, which is crucial for maintaining correct behavior in performance-sensitive code like debouncing and throttling. This prevents them from being re-created unnecessarily and ensures their internal state (timers) is not lost, leading to the correct functionality you observed.

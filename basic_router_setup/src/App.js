@@ -11,6 +11,9 @@ import StopWatch2 from "./components/Pages/StopWatch2";
 import Stopwatch3 from "./components/Pages/Stopwatch3";
 import TodoList from "./components/Pages/TodoList";
 import TodoList2 from "./components/Pages/TodoList2";
+import PerformaceImprove from "./components/Pages/PerformaceImprove";
+import Form from "./components/Pages/Form";
+import FormsUsingFormik from "./components/Pages/FormsUsingFormik";
 
 function App() {
   return <Router>
@@ -26,6 +29,10 @@ function App() {
         <Route path="/stopwatch3" element={<Stopwatch3/>}/>
         <Route path="/todo" element={<TodoList/>}/>
         <Route path="/todo2" element={<TodoList2/>}/>
+        <Route path="/preformance" element={<PerformaceImprove/>}/>
+        <Route path="/form" element={<Form/>}/>
+        <Route path="/formik" element={<FormsUsingFormik/>}/>
+        
         <Route path="*" element={<NotFound/>}/>
       </Routes>
     </div>

@@ -1,0 +1,101 @@
+/ ### The `ourDebounce` Function
+
+// ```javascript
+// const ourDebounce = (fn, delay) => {
+//   let timer;
+//   return (...args) => {
+//     clearTimeout(timer);
+//     timer = setTimeout(() => {
+//       fn(...args);
+//     }, delay);
+//   };
+// };
+// ```
+
+// // #### Line-by-Line Explanation
+
+// // 1. **Line 1: Function Definition**
+
+//    ```javascript
+//    const ourDebounce = (fn, delay) => {
+//    ```
+
+//    - `const ourDebounce = (fn, delay) => {` is defining a new function called `ourDebounce` using an arrow function syntax. 
+//    - `fn` is a parameter that represents the function you want to control the execution of (the function you want to debounce).
+//    - `delay` is the amount of time in milliseconds to wait before allowing `fn` to be executed.
+
+// 2. **Line 2: Timer Variable Declaration**
+
+//    ```javascript
+//    let timer;
+//    ```
+
+//    - `let timer;` declares a variable named `timer`. This variable will be used to store the ID of the timeout that is created with `setTimeout`.
+//    - Initially, `timer` is undefined.
+
+// 3. **Line 3: Returning a Function**
+
+//    ```javascript
+//    return (...args) => {
+//    ```
+
+//    - This line returns a new function (another arrow function) that takes any number of arguments (`...args` is the "rest" operator, which collects all arguments into an array).
+//    - This returned function is what actually gets called whenever you use the debounced function.
+
+// 4. **Line 4: Clear Existing Timeout**
+
+//    ```javascript
+//    clearTimeout(timer);
+//    ```
+
+//    - `clearTimeout(timer);` is called every time the returned function is executed.
+//    - This function clears any previously set timeout referenced by `timer`. In simpler terms, it stops the last scheduled execution of `fn` if it hasn't happened yet.
+
+// 5. **Line 5-6: Set New Timeout**
+
+//    ```javascript
+//    timer = setTimeout(() => {
+//      fn(...args);
+//    }, delay);
+//    ```
+
+//    - `timer = setTimeout(() => { ... }, delay);` starts a new timeout using `setTimeout`.
+//    - This sets `fn` to be called after `delay` milliseconds, but only if this timeout isn't cleared first by another function call.
+//    - `fn(...args);` is where the original function `fn` gets called with the collected arguments (`...args`). 
+
+// ### How This Works in Practice
+
+// Let's go through a quick example of how this debounced function would behave:
+
+// 1. **First Call**: 
+//    - The returned function is called for the first time. 
+//    - `clearTimeout(timer);` does nothing because `timer` is still `undefined`.
+//    - `setTimeout` schedules `fn` to run after `delay` milliseconds.
+
+// 2. **Subsequent Calls** (Before Delay Elapses):
+//    - Every time the function is called again before the `delay` period finishes:
+//    - `clearTimeout(timer);` cancels the previously scheduled execution of `fn`.
+//    - A new `setTimeout` is started, resetting the `delay`.
+
+// 3. **Execution**:
+//    - If no new calls happen before the `delay` period, `fn` is finally executed with the collected arguments.
+//    - This ensures that `fn` only runs once the calls have "settled down" for at least `delay` milliseconds.
+
+// ### Summary
+
+// - **`ourDebounce`** creates a function that delays the execution of `fn` until after a certain amount of time (`delay`) has passed since it was last called.
+// - **`clearTimeout(timer)`** ensures that if a new call is made before the delay ends, the previous timeout is canceled, and the delay timer starts again.
+// - This is useful for scenarios where you want to limit how often a function can be called, such as handling events like button clicks or key presses.
+
+
+// Sure, let’s break it down in a simpler way:
+
+// When you use the `ourDebounce` function, here’s what happens:
+
+// - **When you call the debounced function for the first time:** A timer starts. This timer is set to wait for a specific amount of time (the `delay` you provided) before running the function `fn`.
+
+// - **If you call the debounced function again before the timer ends:** The previous timer is canceled, and a new timer starts. This means the function `fn` won’t run yet. It keeps waiting for that delay time again.
+
+// - **The function `fn` will only run if you stop calling the debounced function for a while:** Specifically, it will run after the delay period has passed without any new calls.
+
+// In short, `fn` will only be executed after you stop calling the debounced function for at least the delay time. If you keep calling it before the delay time is up, the timer keeps resetting, and `fn` won’t run. This way, `fn` only executes when you’ve stopped calling the debounced function for a certain amount of time.
